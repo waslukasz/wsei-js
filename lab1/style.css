@@ -1,0 +1,25 @@
+body {
+    margin: 0;
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#calc {
+    border: 1px black solid;
+    padding: 15px;
+}
+
+.calc-fields {
+    margin: 10px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px 15px;
+}
+
+.calc-results {
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+}
