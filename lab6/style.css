@@ -1,0 +1,29 @@
+#board {
+    height: 300px;
+    width: 300px;
+    box-sizing: content-box;
+    border: 2px solid black;
+    position: relative;
+}
+
+#ball {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #333;
+    border: 1px solid blue;
+    box-sizing: border-box;
+    position: absolute;
+    z-index: 1;
+}
+
+.hole {
+    background: white;
+    border: 2px black solid;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    box-sizing: border-box;
+    position: absolute;
+    transform: translate(260px, 260px);
+}

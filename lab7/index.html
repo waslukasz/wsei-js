@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="notepad" id="notepad">
+        <div class="note pinned">
+            <div class="title">Tytuł notatki zawarty tutaj</div>
+            <div class="content">Zawartość notatki</div>
+            <div class="date">10.11.2023</div>
+        </div>
+        <div class="note">
+            <div class="title">Tytuł notatki</div>
+            <div class="content">Zawartość notatki</div>
+            <div class="date">10.11.2023</div>
+        </div>
+
+        <div class="create">
+            <label for="title">Tytuł</label>
+            <input type="text" name="title" id="title">
+            <label for="content">Zawartość</label>
+            <textarea name="content" id="content" cols="5" rows="3"></textarea>
+            <label for="pin"><input type="checkbox" name="pin" id="pin">Przypiąć notatkę?</label>
+            <label for="color">Color:</label>
+            <select name="color" id="color">
+                <option value="Red">Red</option>
+                <option value="Green">Green</option>
+                <option value="Blue">Blue</option>
+            </select>
+            <br>
+            <button type="submit">Zapisz notatkę</button>
+        </div>
+    </div>
+    
+</body>
+
+<script src="script.js"></script>
+</html>
