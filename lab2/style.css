@@ -1,0 +1,11 @@
+.slides {
+    display: flex;
+    width: 1000px;
+    overflow: hidden;
+}
+
+.slide {
+    transition: margin .5s;
+    width: 1000px;
+    height: 600px;
+}
