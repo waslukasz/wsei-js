@@ -1,0 +1,71 @@
+body {
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    color: white;
+}
+
+.notepad {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    background: #fff3;
+    border: 1px #fff8 solid;
+}
+
+.note {
+    border: 1px #fff8 solid;
+    background: #fff3;
+    padding: 10px;
+    position: relative;
+}
+
+.note.pinned::before {
+    position: absolute;
+    content: '!';
+    width: 1em;
+    height: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    top: -0.5em;
+    background: red;
+    right: -0.5em;
+    font-size: 1em;
+    color: white;
+    font-weight: 700;
+}
+
+.note > .title {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.2em;
+}
+
+.note > .content {
+    font-family: monospace;
+}
+
+.note > .date {
+    font-family: monospace;
+    text-align: right;
+    color: #333;
+    font-weight: 600;
+    letter-spacing: -1px;
+}
+
+.notepad > .create {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff1;
+    padding: 10px;
+    border: 1px solid white;
+}
+.create > textarea {
+    resize: vertical;
+}
