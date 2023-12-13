@@ -1,0 +1,16 @@
+body {
+    margin: 0;
+}
+
+.tracks {
+    display: flex;
+    gap: 15px;
+}
+
+.tracks > * {
+    display: inline-flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-self: start;
+    gap: 5px;
+}

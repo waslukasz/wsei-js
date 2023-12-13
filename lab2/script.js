@@ -2,19 +2,25 @@ InitiateSliders();
 
 function InitiateSliders() {
     const sliders = document.querySelectorAll(".slider");
-    const INTERVAL_TIME_MS = 3000;
 
     for (let i = 0; i < sliders.length; i++) {
         const slider = sliders[i];
         const slides = slider.querySelector(".slides").children;
         let currentSlide = 0;
-        let paused = false;
-        let altAnimation = false; // false: slide, true: fade in
+        let altAnimation = false; // Alternative animation. false: carousel, true: fade in
+
+        const INTERVAL_TIME_MS = 3000; // Time between changins slides automatically.
+        let timer = null; // Interval that changes slides automatically.
+        const interval = new AutoSlideChange();
+        interval.start();
+        function AutoSlideChange() { // Function to make automatic slide change code more clear.
+            AutoSlideChange.prototype.start = function() {if(timer == null) timer = setInterval(() => ChangeSlide(currentSlide+1), INTERVAL_TIME_MS);}
+            AutoSlideChange.prototype.stop = function() {clearInterval(timer); timer = null;}
+        }
 
         const controls = document.createElement("div");
         controls.classList.add("slider-controls");
         slider.append(controls);
-
         const prevBtn = document.createElement("button");
         prevBtn.innerText = "Previous";
         prevBtn.addEventListener("click", () => ChangeSlide(currentSlide-1));
@@ -28,15 +34,6 @@ function InitiateSliders() {
         controls.append(nextBtn);
         nextBtn.addEventListener("mouseover", () => interval.stop());
         nextBtn.addEventListener("mouseleave", () => interval.start());
-
-
-        let timer = null;
-        const interval = new AutoSlideChange();
-        interval.start();
-        function AutoSlideChange() {
-            AutoSlideChange.prototype.start = function() {if(timer == null) timer = setInterval(() => ChangeSlide(currentSlide+1), INTERVAL_TIME_MS); console.log(1)}
-            AutoSlideChange.prototype.stop = function() {clearInterval(timer); timer = null; console.log(2)}
-        }
 
         const altAnimToggle = document.createElement("label");
         altAnimToggle.setAttribute("for", `altAnim${i}`);
@@ -79,33 +76,32 @@ function InitiateSliders() {
                 interval.start();
                 lightbox.innerHTML = "";
             });
-
             lightbox.addEventListener("mouseover", () => interval.stop());
         }
 
         function ChangeSlide(id) {
             altAnimation = altAnimToggleCheckbox.checked;
             let margin = 0;
-            if (id >= slides.length) id = 0; 
+            if (id >= slides.length) id = 0;
             if (id < 0) id = slides.length-1;
             currentSlide = id;
 
             for (let i = 0; i < slides.length; i++) {
                 const slide = slides[i];
-                if (!altAnimation && slide.classList.contains("slide-alt")) slide.classList.remove("slide-alt");
+                if (!altAnimation && slide.classList.contains("slide-alt")) slide.classList.remove("slide-alt");    // Add class to change animation style depending on settings.
                 else if (altAnimation && !slide.classList.contains("slide-alt")) slide.classList.add("slide-alt");
-                if (currentSlide != i && slide.classList.contains("active")) slide.classList.remove("active");
+                if (currentSlide != i && slide.classList.contains("active")) slide.classList.remove("active");      // Add class to style active slide.
                 else if (currentSlide == i && !slide.classList.contains("active")) slide.classList.add("active");
-                if (i < currentSlide) margin -= slide.width;
+                if (i < currentSlide) margin -= slide.width;    // Calculate margin needed to show current slide.
             }
 
-            const radios = controls.querySelectorAll(`input[type="radio"]`);
+            const radios = controls.querySelectorAll(`input[type="radio"]`); // Select correct radio element to show which slide is shown at the moment.
             for (let i = 0; i < radios.length; i++) {
                 const radio = radios[i];
                 if (currentSlide == i) radio.checked = true;
             }
 
-            slides[0].style.marginLeft = `${margin}px`;
+            slides[0].style.marginLeft = `${margin}px`; // Move (by previous slides width in px) first slide to show other.
         }
     }
 }
