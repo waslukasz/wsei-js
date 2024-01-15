@@ -1,0 +1,14 @@
+#weather .cities {
+    display: flex;
+    gap: 2em;
+    font-size: 1.2em;
+    color: black;
+    font-weight: 500;
+    font-family: monospace;
+}
+
+#weather .cities span:hover {
+    color: red;
+    text-decoration: line-through;
+    cursor: pointer;
+}

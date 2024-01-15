@@ -1,17 +1,19 @@
 body {
     height: 100vh;
     width: 100vw;
+    gap: 20px;
     margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: inline-flex;
+    flex-direction: column;
     background-color: black;
     color: white;
 }
 
 .notepad {
-    display: flex;
-    flex-direction: column;
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 10px;
     padding: 10px;
     background: #fff3;
@@ -19,6 +21,8 @@ body {
 }
 
 .note {
+    display: flex;
+    flex-direction: column;
     border: 1px #fff8 solid;
     background: #fff3;
     padding: 10px;
@@ -59,13 +63,14 @@ body {
     letter-spacing: -1px;
 }
 
-.notepad > .create {
-    display: flex;
+.notepad-create {
+    display: inline-flex;
+    align-self: center;
     flex-direction: column;
     background-color: #fff1;
     padding: 10px;
     border: 1px solid white;
 }
-.create > textarea {
+.notepad-create > textarea {
     resize: vertical;
 }

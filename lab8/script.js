@@ -1,9 +1,16 @@
 const weather = document.querySelector("#weather");
 const API_KEY = "f69a7fc6ad354e7c5850bf2028010738";
 
-GetWeatherByCityApi("Krakow");
+let cities = [];
+let citiesDiv = document.createElement("div");
+citiesDiv.classList.add("cities");
 
-as
+function AddCity(name) {
+    cities.push(name);
+    GetWeatherByCityApi(name);
+}
+
+GetWeatherByCityApi("Krakow");
 
 async function GetWeatherByCityApi(cityName) {
     const city = await GetCityByNameApi(cityName);
@@ -11,9 +18,9 @@ async function GetWeatherByCityApi(cityName) {
                             .then(response => response.json());
     let newWeather = {
         name: cityName,
-        temp_C: (response.main.temp - 273.15).toFixed(2),
-        humidity: response.main.humidity,
-        icon: `https://openweathermap.org/img/wn/${response.weather[0].icon}@2x.png`
+        temp_C: (data.main.temp - 273.15).toFixed(2),
+        humidity: data.main.humidity,
+        icon: `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
     }
     let weatherObject = document.createElement("div");
     weatherObject.innerHTML = `<span>${newWeather.name}</span>

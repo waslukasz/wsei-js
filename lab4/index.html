@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="notepad-create">
+        <label for="title">Tytuł</label>
+        <input type="text" name="title" id="title">
+        <label for="content">Zawartość</label>
+        <textarea name="content" id="content" cols="5" rows="3"></textarea>
+        <label for="pin"><input type="checkbox" name="pin" id="pin">Przypiąć notatkę?</label>
+        <label for="color">Color:</label>
+        <select name="color" id="color">
+            <option value="Red">Red</option>
+            <option value="Green">Green</option>
+            <option value="Blue">Blue</option>
+        </select>
+        <br>
+        <button type="submit">Zapisz notatkę</button>
+    </div>
+    <div class="notepad" id="notepad">
+        
+    </div>
+    
+</body>
+
+<script src="script.js"></script>
+</html>
