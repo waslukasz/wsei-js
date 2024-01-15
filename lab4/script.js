@@ -14,13 +14,13 @@ btn.addEventListener('click', (event) => {
         date: Date.now()
     }
     SaveNote(note);
-    DisplayNotes()
+    DisplayNotes();
     event.preventDefault();
 });
 
 function DisplayNotes() {
-    currentNotes = notepad.querySelectorAll('.note');
-    currentNotes.forEach(el => el.remove());
+    notepad.querySelectorAll('.note').forEach(el => el.remove());
+    UpdateLocalStorage();
 
     notes.sort(function (a,b) {
         return a.isPinned - b.isPinned || b.date - a.date;
@@ -98,20 +98,16 @@ function DisplayNotes() {
 
 function SaveNote(note) {
     notes.push(note);
-    UpdateLocalStorage()
     DisplayNotes();
 }
 
 function UpdateNote(oldNote, newNote) {
     notes[notes.indexOf(oldNote)] = newNote;
-    UpdateLocalStorage()
     DisplayNotes();
 }
 
 function DeleteNote(item) {
     notes.splice(notes.indexOf(item), 1);
-    localStorage.removeItem('notes');
-    localStorage.setItem('notes', JSON.stringify(notes));
     DisplayNotes();
 }
 
