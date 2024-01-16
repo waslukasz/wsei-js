@@ -24,6 +24,7 @@ let arr = Array.from({length: 100}, () => Math.floor(Math.random() * 40));
 async function asyncAddArray(array) {
     let sum = 0;
     let asyncOperations = 0;
+
     for (let i = 0; i < array.length; i++) {
         const el = array[i];
         sum = await asyncAdd(sum, el);

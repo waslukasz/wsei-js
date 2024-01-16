@@ -4,7 +4,7 @@ let notes = [];
 
 InitiateNotes();
 
-const btn = document.querySelector('.create button')
+const btn = document.querySelector('.notepad-create button')
 btn.addEventListener('click', (event) => {
     let note = {
         title: document.querySelector('#title').value,
