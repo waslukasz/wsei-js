@@ -13,8 +13,12 @@ function InitiateApp() {
     const SPEED_DISPROPORTION = 2;
     const DRAW_POINT_COUNT = true;
     const CONNECT_IF_CLOSE = true;
+    const LIMIT_FPS = true;
+    const FPS_MAX = 60;
     const DISTANCE_TO_CONNECT = 150;
     let paused = true;
+    let lastRenderTime;
+    let fps;
 
     let point_count = 50;
     let points = [];
@@ -32,11 +36,12 @@ function InitiateApp() {
     AddControls();
 
     function animate() {
-        requestAnimationFrame(animate)
+        requestAnimationFrame(animate);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         DrawPoints();
         if (CONNECT_IF_CLOSE) DrawProximityLine();
         if (DRAW_POINT_COUNT) DrawPointCount();
+        DrawFPS();
     }
 
     function DrawPoints() {
@@ -121,6 +126,23 @@ function InitiateApp() {
         ctx.closePath();
     }
 
+    function DrawFPS() {
+        if(!lastRenderTime) {
+            lastRenderTime = Date.now();
+            fps = 0;
+            return;
+        }
+        delta = (Date.now() - lastRenderTime)/1000;
+        lastRenderTime = Date.now();
+        fps = Math.floor(1/delta);
+
+        ctx.beginPath();
+        ctx.font = "32px serif";
+        ctx.fillStyle = '#fff';
+        ctx.fillText(`FPS: ${fps}`, 10, 82);
+        ctx.closePath();
+    }
+
     function UpdatePointCount() {
         if (point_count > points.length) {
             for (let i = 0; i < point_count - points.length; i++) {
@@ -133,6 +155,16 @@ function InitiateApp() {
                 RemovePoint();
             }
         }
+
+        if(!paused && LIMIT_FPS) {
+            if(fps < FPS_MAX) {
+                point_count--;
+            }
+            if(fps > FPS_MAX) {
+                point_count++;
+            }
+        }
+
     }
 
     function GeneratePoint() {

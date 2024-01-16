@@ -97,8 +97,6 @@ function InitiateGame() {
         // gamma: left right, beta: up down
         let beta = event.beta;
         let gamma = event.gamma;
-        let lowSpeed = 1;
-        let highSpeed = 2;
 
         speedX = gamma/45;
         speedY = beta/45;
@@ -106,6 +104,7 @@ function InitiateGame() {
 
     function animate() {
         requestAnimationFrame(animate)
+
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         if (!gameover) {
             Draw(ball);
@@ -115,6 +114,8 @@ function InitiateGame() {
         } else {
             DrawGameover();   
         }
+
+
     }
 
     function DrawUI() {
