@@ -1,10 +1,28 @@
+body {
+    margin: 0;
+    display: flex;
+    min-width: 100vw;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background-color: #333;
+    color: white;
+}
+
 .cities {
     display: flex;
     gap: 2em;
     font-size: 1.2em;
-    color: black;
+    color: white;
     font-weight: 500;
     font-family: monospace;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
 }
 
 .cities span:hover {
@@ -16,11 +34,20 @@
 .weather {
     display: inline-flex;
     flex-direction: column;
-    border: 1px solid black;
+    background-color: #222;
+    border: 1px solid white;
     padding: 10px;
 }
 
 .weathers {
     display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 10px;
+}
+
+.weather > img {
+    height: 104px;
+    width: 104px;
+    align-self: center;
 }

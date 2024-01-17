@@ -66,12 +66,12 @@ function InitiateApp() {
         }
 
         function DrawPoint(point) {
+            if(!paused) UpdatePointPosition(point);
             ctx.beginPath();
             ctx.arc(point.x, point.y, point.size, 0, Math.PI * 2);
             ctx.fillStyle = point.color;
             ctx.fill();
             ctx.closePath();
-            if(!paused) UpdatePointPosition(point);
         }
 
         function UpdatePointPosition(point) {
