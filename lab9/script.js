@@ -6,21 +6,34 @@ app.append(canvas);
 InitiateApp();
 
 function InitiateApp() {
-    const MIN_SPACE_BETWEEN = 50;
-    const POINT_SIZE = 5;
-    const AVG_SPEED = 1;
-    const MIN_SPEED = .2;
-    const SPEED_DISPROPORTION = 2;
-    const DRAW_POINT_COUNT = true;
+    // SETTINGS
+    const START_POINT_COUNT = 100;
+    const POINT_SIZE = 3.5;
+    const LINE_WIDTH = 1;
+
+    const AVG_SPEED = 0;
+    const MIN_SPEED = .05;
+    const SPEED_DISPROPORTION = .5;
+
     const CONNECT_IF_CLOSE = true;
-    const LIMIT_FPS = true;
+    const DISTANCE_TO_CONNECT = 100;
+
+    const DRAW_POINT_COUNT = true;
+    const DRAW_FPS = true;
+
     const FPS_MAX = 60;
-    const DISTANCE_TO_CONNECT = 150;
+    const LIMIT_FPS = false;
+
+    const COLOR_POINT = '#2D5D7B';
+    const COLOR_BG = '#333';
+    const COLOR_LINE = '#457EAC33';
+
+    // CODE
     let paused = true;
     let lastRenderTime;
     let fps;
 
-    let point_count = 50;
+    let point_count = START_POINT_COUNT;
     let points = [];
 
     window.addEventListener('resize', () => {
@@ -31,17 +44,17 @@ function InitiateApp() {
 
     ctx.canvas.height = window.innerHeight;
     ctx.canvas.width = window.innerWidth;
-    ctx.canvas.style.background = '#333';
+    ctx.canvas.style.background = COLOR_BG;
 
     AddControls();
 
     function animate() {
         requestAnimationFrame(animate);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        DrawPoints();
         if (CONNECT_IF_CLOSE) DrawProximityLine();
+        DrawPoints();
         if (DRAW_POINT_COUNT) DrawPointCount();
-        DrawFPS();
+        if (DRAW_FPS) DrawFPS();
     }
 
     function DrawPoints() {
@@ -102,8 +115,8 @@ function InitiateApp() {
             ctx.beginPath();
             ctx.moveTo(point.x, point.y);
             ctx.lineTo(target.x, target.y);
-            ctx.strokeStyle = '#aaa';
-            ctx.lineWidth = 1;
+            ctx.strokeStyle = COLOR_LINE;
+            ctx.lineWidth = LINE_WIDTH;
             ctx.stroke();
             ctx.closePath();
         }
@@ -122,7 +135,7 @@ function InitiateApp() {
         ctx.beginPath();
         ctx.font = "32px serif";
         ctx.fillStyle = '#fff';
-        ctx.fillText(`Ball count: ${point_count}`, 10, 50);
+        ctx.fillText(`Point count: ${point_count}`, 10, 50);
         ctx.closePath();
     }
 
@@ -174,7 +187,7 @@ function InitiateApp() {
             y: 0,
             speedX: 0,
             speedY: 0,
-            color: '#fff3'
+            color: COLOR_POINT
         }
         while (point.speedX < MIN_SPEED && point.speedX > -MIN_SPEED) {
             point.speedX = Math.random() * ((AVG_SPEED + SPEED_DISPROPORTION) - (AVG_SPEED - SPEED_DISPROPORTION)) + (AVG_SPEED - SPEED_DISPROPORTION);
@@ -209,6 +222,7 @@ function InitiateApp() {
 
         start.addEventListener('click', () => paused = false);
         restart.addEventListener('click', () => {
+            point_count = START_POINT_COUNT;
             points = [];
             paused = true;
         })
