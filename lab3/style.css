@@ -7,6 +7,7 @@ body {
     align-items: center;
     flex-direction: column;
     background: #333;
+    gap: 15px;
 }
 
 .tracks {
@@ -14,11 +15,10 @@ body {
     gap: 10px;
 }
 
-.tracks > * {
+.tracks > *, #metronome {
     display: inline-flex;
     flex-direction: column;
     flex-wrap: wrap;
-    align-self: start;
     gap: 5px;
     border: 1px solid black;
     padding: 15px;

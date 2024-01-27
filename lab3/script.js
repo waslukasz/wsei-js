@@ -38,6 +38,68 @@ for (let i = 0; i < RECORD_CHANNELS; i++) {
 
 document.body.append(tracks);
 
+InitiateMetronome();
+
+function InitiateMetronome() {
+    const metronome = document.createElement('div');
+    const audio = document.createElement('audio');
+    audio.src='./media/metronome.mp3';
+    audio.controls = true;
+    audio.hidden = true;
+    const label_metronome = document.createElement('label');
+
+    metronome.id = 'metronome';
+    label_metronome.innerText = 'Metronome';
+
+    const enable_metronome = document.createElement('input');
+    enable_metronome.type = 'checkbox';
+
+    const bpm = document.createElement("input");
+
+    bpm.id = 'bpm';
+    bpm.type = 'number';
+    bpm.min = 1;
+    bpm.max = 600;
+    bpm.defaultValue = 120;
+
+    label_metronome.append(enable_metronome);
+    metronome.append(audio, label_metronome, bpm);
+    document.body.append(metronome);
+
+    let interval;
+    let isPlaying = false;
+    let currentBpm = 60_000 / bpm.value;
+    
+    bpm.addEventListener('change', () => {
+        UpdateInterval();
+    });
+    enable_metronome.addEventListener('change', () => {
+        PlayMetronome()
+    });
+
+    function UpdateInterval() {
+        currentBpm = 60_000 / bpm.value;
+        if (isPlaying) {
+            clearInterval(interval);
+            interval = setInterval(() => {
+                playSound(audio);
+            }, currentBpm);
+        }
+    }
+
+    function PlayMetronome() {
+        if (enable_metronome.checked == true) {
+            interval = setInterval(() => {
+                playSound(audio);
+            }, currentBpm);
+            isPlaying = true;
+        } else {
+            clearInterval(interval);
+            isPlaying = false;
+        }
+    }
+}
+
 function RecordTrack(event) {
     const trackId = Number(event.target.parentElement.getAttribute("id").replace("channel", ""));
     let track = [0];
@@ -68,9 +130,14 @@ function RecordTrack(event) {
 
 async function PlayTrack(event) {
     const trackId = Number(event.target.parentElement.getAttribute("id").replace("channel", ""));
+
     const track = track_list[trackId];
     let trackBtn = event.target;
     let trackPlaying = true;
+
+    if (trackId == 0) {
+        ToggleTracks();
+    }
 
     await Play(track);
     trackBtn.innerText = "Stop playing";
@@ -84,11 +151,13 @@ async function PlayTrack(event) {
         trackBtn.innerText = "Play";
         trackBtn.addEventListener("click", PlayTrack);
         trackPlaying = false;
+        if (trackId == 0) {
+            ToggleTracks();
+        }
     });
 
     async function Play(track) {
-        let trackDuration;
-        trackDuration = track[track.length-1];
+        let trackDuration = track[track.length-1];
         for (let i = 0; i < track.length; i++) {
             const sound = track[i];
             setTimeout(() => {
@@ -99,8 +168,16 @@ async function PlayTrack(event) {
             if (trackPlaying) Play(track);
         }, trackDuration);
     }
-}
 
+    function ToggleTracks() {
+        targetTracks = [1, 3];
+        for (let i = 0; i < targetTracks.length; i++) {
+            const id = targetTracks[i];
+            const target = document.getElementById(`channel${id}`);
+            target.querySelectorAll('button').forEach((btn) => btn.disabled = !btn.disabled);
+        }
+    }
+}
 
 const KeyToSound = 
 {
